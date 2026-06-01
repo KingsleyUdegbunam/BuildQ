@@ -1,16 +1,3 @@
-import { QueryGroup } from "../types/query";
+import { createGroup } from "../lib/query-tree";
 
-export const defaultQuery: QueryGroup = {
-  id: "root",
-  type: "group",
-  logic: "AND",
-  children: [
-    {
-      id: crypto.randomUUID(),
-      type: "rule",
-      field: "age",
-      operator: "greater_than",
-      value: 18,
-    },
-  ],
-};
+export const defaultQuery = createGroup("AND");
