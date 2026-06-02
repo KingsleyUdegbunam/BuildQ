@@ -47,7 +47,7 @@ export function QueryWorkspace(props: QueryWorkspaceProps) {
   const activeNode = props.query.nodes[props.activeNodeId];
 
   return (
-    <div className="grid min-h-0 overflow-hidden grid-cols-[minmax(0,1fr)_320px] border-b border-[var(--bq-border)]">
+    <div className="grid min-w-0 max-w-full grid-cols-1 overflow-x-hidden overflow-y-visible border-b border-[var(--bq-border)] lg:min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] lg:overflow-hidden">
       <QueryCanvasPanel
         activeNodeId={props.activeNodeId}
         draggingNodeId={props.draggingNodeId}
@@ -68,7 +68,7 @@ export function QueryWorkspace(props: QueryWorkspaceProps) {
         onUpdateGroupLogic={props.onUpdateGroupLogic}
         onUpdateRule={props.onUpdateRule}
       />
-      <div className="flex min-h-0 flex-col overflow-y-auto overflow-x-hidden border-l border-[var(--bq-border)] bg-[var(--bq-panel)]">
+      <div className="flex min-h-0 min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-visible border-t border-[var(--bq-border)] bg-[var(--bq-panel)] lg:overflow-y-auto lg:border-l lg:border-t-0">
         <NodeInspector
           node={activeNode}
           schema={props.schema}

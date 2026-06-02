@@ -63,7 +63,7 @@ export function QueryRule({
         event.stopPropagation();
         onDropOnRule(event);
       }}
-      className={`group w-[190px] rounded-md border bg-[var(--bq-panel)] p-3 shadow-sm transition ${
+      className={`group w-[154px] rounded-md border bg-[var(--bq-panel)] p-2.5 shadow-sm transition sm:w-[190px] sm:p-3 ${
         isInvalid
           ? "border-[var(--bq-danger)]"
           : isSelected
@@ -88,7 +88,7 @@ export function QueryRule({
         <span className="rounded bg-[var(--bq-accent-soft)] px-1.5 py-0.5 text-[11px] text-[var(--bq-accent)]">
           {field.type}
         </span>
-        <div className="ml-auto flex items-center gap-1 opacity-0 transition group-hover:opacity-100">
+        <div className="ml-auto flex items-center gap-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
           <button
             type="button"
             disabled={!canMoveUp}
@@ -137,8 +137,6 @@ export function QueryRule({
     </div>
   );
 }
-
-
 
 
 

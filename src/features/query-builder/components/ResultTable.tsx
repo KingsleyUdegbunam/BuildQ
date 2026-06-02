@@ -12,9 +12,9 @@ export function ResultTable({ rows }: { rows: Row[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-[var(--bq-border)]">
+    <div className="overflow-hidden rounded-md border border-[var(--bq-border)]">
       <div className="max-h-72 overflow-auto">
-        <table className="w-full min-w-[520px] border-collapse text-left text-xs">
+        <table className="w-full min-w-[560px] border-collapse text-left text-xs">
           <thead className="sticky top-0 bg-[var(--bq-accent-soft)] text-[var(--bq-text)]">
             <tr>
               {columns.map((column) => (

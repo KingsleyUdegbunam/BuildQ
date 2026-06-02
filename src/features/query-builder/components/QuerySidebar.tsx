@@ -3,6 +3,7 @@ import { SchemaBrowser } from "./SchemaBrowser";
 
 type QuerySidebarProps = {
   historyLength: number;
+  isCompact: boolean;
   isCollapsed: boolean;
   presets: QueryPreset[];
   schema: QuerySchema;
@@ -21,6 +22,7 @@ function SidebarIcon() {
 
 export function QuerySidebar({
   historyLength,
+  isCompact,
   isCollapsed,
   presets,
   schema,
@@ -31,12 +33,16 @@ export function QuerySidebar({
   if (isCollapsed) {
     return (
       <aside className="flex min-h-0 flex-col border-r border-[var(--bq-border)] bg-[var(--bq-panel)]">
-        <div className="flex h-full w-full flex-col items-center gap-4 px-2 py-3">
+        <div
+          className={`flex h-full w-full items-center gap-3 px-2 py-2 ${
+            isCompact ? "flex-row justify-between" : "flex-col"
+          }`}
+        >
           <button type="button" onClick={onExpand} className="grid size-7 place-items-center rounded-md border border-[var(--bq-border)] text-[var(--bq-muted)] hover:border-[var(--bq-accent)] hover:text-[var(--bq-accent)]" aria-label="Open schema panel" title="Open schema panel">
             <SidebarIcon />
           </button>
-          <button type="button" onClick={onExpand} className="flex flex-1 items-start justify-center text-xs font-semibold uppercase tracking-wide text-[var(--bq-muted)] hover:text-[var(--bq-accent)]" aria-label="Open schema panel">
-            <span className="[writing-mode:vertical-rl]">Schema</span>
+          <button type="button" onClick={onExpand} className="flex flex-1 items-center justify-center text-xs font-semibold uppercase tracking-wide text-[var(--bq-muted)] hover:text-[var(--bq-accent)]" aria-label="Open schema panel">
+            <span className={isCompact ? "" : "[writing-mode:vertical-rl]"}>Schema</span>
           </button>
         </div>
       </aside>
