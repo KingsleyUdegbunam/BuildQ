@@ -1,3 +1,4 @@
-import { createGroup } from "../lib/query-tree";
+import { createDefaultQueryState } from "../lib/query-state";
+import { userSchema } from "./schema";
 
-export const defaultQuery = createGroup("AND");
+export const defaultQuery = createDefaultQueryState(userSchema);
