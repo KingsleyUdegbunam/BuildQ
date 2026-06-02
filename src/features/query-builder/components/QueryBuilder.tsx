@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { mockOrders, mockUsers } from "../data/mock-user";
 import { createPresetQueries } from "../data/presets";
 import { querySchemas, userSchema } from "../data/schema";
@@ -48,6 +48,7 @@ type QueryBuilderProps = {
 };
 
 export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [schemaId, setSchemaId] = useState(userSchema.id);
   const schema = useMemo(
     () => querySchemas.find((item) => item.id === schemaId) ?? userSchema,
@@ -162,10 +163,36 @@ export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
   const sidebarWidth = isSidebarCollapsed
     ? SIDEBAR_MIN_WIDTH
     : SIDEBAR_DEFAULT_WIDTH;
+  const shellGridStyle = isCompactViewport
+    ? {
+        gridTemplateColumns: "minmax(0, 1fr)",
+        gridTemplateRows: isSidebarCollapsed
+          ? "44px auto"
+          : "minmax(220px, 34dvh) auto",
+      }
+    : {
+        gridTemplateColumns: `${sidebarWidth}px minmax(0, 1fr)`,
+      };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+
+    function updateViewportMode() {
+      setIsCompactViewport(mediaQuery.matches);
+      if (mediaQuery.matches) {
+        setIsSidebarCollapsed(true);
+      }
+    }
+
+    updateViewportMode();
+    mediaQuery.addEventListener("change", updateViewportMode);
+
+    return () => mediaQuery.removeEventListener("change", updateViewportMode);
+  }, []);
 
   return (
     <main
-      className={`${shellClass} flex h-screen min-h-screen flex-col overflow-hidden bg-[var(--bq-bg)] text-[var(--bq-text)]`}
+      className={`${shellClass} flex min-h-dvh w-full max-w-full flex-col overflow-x-hidden overflow-y-auto bg-[var(--bq-bg)] text-[var(--bq-text)] lg:h-dvh lg:overflow-hidden`}
     >
       <AppHeader
         issues={issues}
@@ -177,11 +204,12 @@ export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
       />
 
       <div
-        className="grid min-h-0 flex-1 overflow-hidden transition-[grid-template-columns] duration-200 ease-out"
-        style={{ gridTemplateColumns: `${sidebarWidth}px minmax(0, 1fr)` }}
+        className="grid min-h-0 w-full max-w-full flex-1 overflow-x-hidden overflow-y-visible transition-[grid-template-columns] duration-200 ease-out lg:overflow-hidden"
+        style={shellGridStyle}
       >
         <QuerySidebar
           historyLength={history.length}
+          isCompact={isCompactViewport}
           isCollapsed={isSidebarCollapsed}
           presets={presets}
           schema={schema}
@@ -190,7 +218,7 @@ export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
           onPresetSelect={(presetQuery) => applyQuery(cloneQueryState(presetQuery))}
         />
 
-        <section className="flex min-h-0 min-w-0 flex-col overflow-hidden bg-[var(--bq-bg)]">
+        <section className="flex min-h-0 min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-visible bg-[var(--bq-bg)] lg:overflow-hidden">
           <ExecutionToolbar
             canRedo={future.length > 0}
             canUndo={history.length > 0}
@@ -204,7 +232,7 @@ export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
             onSchemaChange={resetForSchema}
             onUndo={undo}
           />
-          <div className="grid min-h-0 flex-1 overflow-hidden grid-rows-[minmax(0,1fr)_auto]">
+          <div className="grid min-h-0 max-w-full flex-1 grid-rows-[auto_auto] overflow-x-hidden overflow-y-visible lg:grid-rows-[minmax(0,1fr)_auto] lg:overflow-hidden">
             <QueryWorkspace
               activeChildCount={activeChildCount}
               activeNodeId={activeNodeId}
@@ -267,6 +295,3 @@ export function QueryBuilder({ initialTheme = "light" }: QueryBuilderProps) {
     </main>
   );
 }
-
-
-

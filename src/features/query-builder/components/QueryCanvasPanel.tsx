@@ -47,34 +47,36 @@ export function QueryCanvasPanel({
   onUpdateRule,
 }: QueryCanvasPanelProps) {
   return (
-    <div className="flex min-h-0 flex-col overflow-hidden">
-      <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--bq-border)] bg-[var(--bq-bg)] px-5">
+    <div className="flex h-[420px] min-h-0 min-w-0 max-w-full flex-col overflow-hidden sm:h-[480px] lg:h-auto">
+      <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--bq-border)] bg-[var(--bq-bg)] px-3 sm:px-5">
         <h1 className="text-base font-semibold">Query Builder</h1>
         <button type="button" onClick={onReset} className="rounded-md border border-[var(--bq-border)] px-3 py-1.5 text-xs">
           Reset
         </button>
       </div>
-      <div className="buildq-canvas-grid min-h-0 flex-1 overflow-auto p-7">
-        <QueryGroup
-          groupId={query.rootId}
-          state={query}
-          schema={schema}
-          issues={issues}
-          draggingNodeId={draggingNodeId}
-          selectedNodeId={activeNodeId}
-          onAddRule={onAddRule}
-          onAddGroup={onAddGroup}
-          onUpdateRule={onUpdateRule}
-          onUpdateGroupLogic={onUpdateGroupLogic}
-          onToggleGroup={onToggleGroup}
-          onRemoveNode={onRemoveNode}
-          onMoveNode={onMoveNode}
-          onMoveBeforeNode={onMoveBeforeNode}
-          onMoveToGroup={onMoveToGroup}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onSelectNode={onSelectNode}
-        />
+      <div className="buildq-canvas-grid min-h-0 min-w-0 flex-1 overscroll-contain overflow-auto p-3 sm:p-5 lg:p-7">
+        <div className="w-max min-w-full pr-4">
+          <QueryGroup
+            groupId={query.rootId}
+            state={query}
+            schema={schema}
+            issues={issues}
+            draggingNodeId={draggingNodeId}
+            selectedNodeId={activeNodeId}
+            onAddRule={onAddRule}
+            onAddGroup={onAddGroup}
+            onUpdateRule={onUpdateRule}
+            onUpdateGroupLogic={onUpdateGroupLogic}
+            onToggleGroup={onToggleGroup}
+            onRemoveNode={onRemoveNode}
+            onMoveNode={onMoveNode}
+            onMoveBeforeNode={onMoveBeforeNode}
+            onMoveToGroup={onMoveToGroup}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onSelectNode={onSelectNode}
+          />
+        </div>
       </div>
     </div>
   );

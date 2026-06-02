@@ -89,13 +89,13 @@ export function QueryGroup({
           onMoveToGroup(nodeId, groupId);
         }
       }}
-      className={`relative inline-flex w-max items-start gap-5 py-2 pr-6 transition ${
+      className={`relative inline-flex w-max items-start gap-3 py-2 pr-3 transition sm:gap-5 sm:pr-6 ${
         isSelected
           ? "rounded-lg bg-[var(--bq-accent-soft)] p-2"
           : ""
       }`}
     >
-      <div className="relative w-[150px] shrink-0 rounded-md border border-[var(--bq-border)] bg-[var(--bq-panel)] p-3 shadow-sm">
+      <div className="relative w-[118px] shrink-0 rounded-md border border-[var(--bq-border)] bg-[var(--bq-panel)] p-2.5 shadow-sm sm:w-[150px] sm:p-3">
         <div className="flex items-center justify-between gap-2">
           <span
             className="rounded px-2 py-1 text-xs font-bold"
@@ -163,11 +163,11 @@ export function QueryGroup({
             className="absolute -left-5 top-[52px] h-px w-5"
             style={{ backgroundColor: railColor }}
           />
-          <div className="relative space-y-4 pl-5">
+          <div className="relative space-y-3 pl-5 sm:space-y-4">
             {hasBranches ? (
               <div
                 aria-hidden="true"
-                className="absolute left-0 top-[42px] bottom-[22px] w-px"
+              className="absolute bottom-[22px] left-0 top-[42px] w-px"
                 style={{ backgroundColor: railColor }}
               />
             ) : null}
@@ -250,7 +250,7 @@ export function QueryGroup({
                 event.stopPropagation();
                 onAddRule(groupId);
               }}
-              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-3 py-2 text-xs font-semibold text-[var(--bq-accent)]"
+              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-accent)] sm:px-3"
             >
               + Add condition
             </button>
@@ -260,7 +260,7 @@ export function QueryGroup({
                 event.stopPropagation();
                 onAddGroup(groupId);
               }}
-              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-3 py-2 text-xs font-semibold text-[var(--bq-text)]"
+              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-text)] sm:px-3"
             >
               + Add inner group
             </button>
@@ -271,8 +271,6 @@ export function QueryGroup({
     </section>
   );
 }
-
-
 
 
 

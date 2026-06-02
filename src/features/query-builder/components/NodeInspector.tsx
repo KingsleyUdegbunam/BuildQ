@@ -79,7 +79,7 @@ function GroupInspector({
         <span className="text-sm text-[var(--bq-muted)]">
           {childCount} {childCount === 1 ? "child" : "children"}
         </span>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => onToggleGroup(node.id)}
@@ -128,7 +128,7 @@ function RuleValueControl({
   if (rule.operator === "between") {
     const [start = "", end = ""] = Array.isArray(rule.value) ? rule.value : ["", ""];
     return (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {[start, end].map((value, index) => (
           <input
             key={index}
