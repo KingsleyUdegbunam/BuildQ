@@ -68,7 +68,7 @@ export function QueryWorkspace(props: QueryWorkspaceProps) {
         onUpdateGroupLogic={props.onUpdateGroupLogic}
         onUpdateRule={props.onUpdateRule}
       />
-      <div className="flex min-h-0 min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-visible border-t border-[var(--bq-border)] bg-[var(--bq-panel)] lg:overflow-y-auto lg:border-l lg:border-t-0">
+      <div className="flex max-h-[calc(100dvh-5.5rem)] min-h-0 min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-auto border-t border-[var(--bq-border)] bg-[var(--bq-panel)] lg:max-h-none lg:border-l lg:border-t-0">
         <NodeInspector
           node={activeNode}
           schema={props.schema}
