@@ -4,9 +4,9 @@ BuildQ is a schema-driven visual query builder for constructing complex filters 
 
 ## Live Demo
 
-- GitHub repository: `[Repo](https://github.com/KingsleyUdegbunam/BuildQ)`
-- Live deployed URL: `[Live](https://myquerybuddy.netlify.app/`
-- Demo video: `[Demo](https://drive.google.com/drive/folders/11rxRgN-ZQMDaaex_mvzhv34oHSWWBMz6)`
+- GitHub repository: `https://github.com/KingsleyUdegbunam/BuildQ`
+- Live deployed URL: `https://myquerybuddy.netlify.app/`
+- Demo video: `TBD`
 
 ## Objective
 
@@ -355,7 +355,7 @@ The requirement expects deployment through Vercel or Netlify with preview deploy
 Deployment status:
 
 ```text
-[Link](https://myquerybuddy.netlify.app/)
+https://myquerybuddy.netlify.app/
 ```
 
 Once deployed, update the Live Demo section with the production URL.

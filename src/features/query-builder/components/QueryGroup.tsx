@@ -84,22 +84,29 @@ export function QueryGroup({
       onDrop={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        const nodeId = event.dataTransfer.getData("text/plain") || draggingNodeId;
+        const nodeId =
+          event.dataTransfer.getData("text/plain") || draggingNodeId;
         if (nodeId) {
           onMoveToGroup(nodeId, groupId);
         }
       }}
-      className={`relative inline-flex w-max items-start gap-3 py-2 pr-3 transition sm:gap-5 sm:pr-6 ${
+      className={`relative mx-auto flex w-full max-w-[22rem] flex-col items-center gap-3 py-2 transition sm:mx-0 sm:inline-flex sm:w-max sm:max-w-none sm:flex-row sm:items-start sm:gap-5 sm:pr-6 ${
         isSelected
           ? "rounded-lg bg-[var(--bq-accent-soft)] p-2"
           : ""
       }`}
     >
-      <div className="relative w-[118px] shrink-0 rounded-md border border-[var(--bq-border)] bg-[var(--bq-panel)] p-2.5 shadow-sm sm:w-[150px] sm:p-3">
+      <div
+        className="relative w-full shrink-0 rounded-md border border-l-4 border-[var(--bq-border)] bg-[var(--bq-accent-soft)] p-2.5 shadow-sm ring-1 ring-black/5 sm:w-[150px] sm:border-l sm:bg-[var(--bq-panel)] sm:p-3 sm:ring-0"
+        style={{ borderLeftColor: railColor }}
+      >
         <div className="flex items-center justify-between gap-2">
           <span
             className="rounded px-2 py-1 text-xs font-bold"
-            style={{ backgroundColor: "var(--bq-accent-soft)", color: railColor }}
+            style={{
+              backgroundColor: "var(--bq-accent-soft)",
+              color: railColor,
+            }}
           >
             {group.logic}
           </span>
@@ -157,17 +164,17 @@ export function QueryGroup({
         </div>
       ) : null}
       {!group.collapsed ? (
-        <div className="relative flex items-start">
+        <div className="relative w-full rounded-md border border-[var(--bq-border)] bg-[var(--bq-panel-soft)] p-2 pt-3 sm:flex sm:w-auto sm:items-start sm:border-0 sm:bg-transparent sm:p-0 sm:pt-0">
           <div
             aria-hidden="true"
-            className="absolute -left-5 top-[52px] h-px w-5"
+            className="absolute left-2 top-0 hidden h-3 w-0.5 sm:block sm:-left-5 sm:top-[52px] sm:h-px sm:w-5"
             style={{ backgroundColor: railColor }}
           />
-          <div className="relative space-y-3 pl-5 sm:space-y-4">
+          <div className="relative w-full space-y-3 sm:w-auto sm:space-y-4 sm:pl-5">
             {hasBranches ? (
               <div
                 aria-hidden="true"
-              className="absolute bottom-[22px] left-0 top-[42px] w-px"
+                className="absolute bottom-[22px] left-0 top-[42px] hidden w-px sm:block"
                 style={{ backgroundColor: railColor }}
               />
             ) : null}
@@ -179,91 +186,95 @@ export function QueryGroup({
 
               if (child.type === "group") {
                 return (
-                  <div key={child.id} className="relative">
+                  <div key={child.id} className="relative w-full sm:w-auto">
                     <div
                       aria-hidden="true"
-                      className="absolute -left-5 top-1/2 h-px w-5"
+                      className="absolute -left-5 top-1/2 hidden h-0.5 w-5 sm:block sm:h-px"
                       style={{ backgroundColor: railColor }}
                     />
-                  <QueryGroup
-                    groupId={child.id}
-                    state={state}
-                    schema={schema}
-                    issues={issues}
-                    depth={depth + 1}
-                    draggingNodeId={draggingNodeId}
-                    selectedNodeId={selectedNodeId}
-                    onAddRule={onAddRule}
-                    onAddGroup={onAddGroup}
-                    onUpdateRule={onUpdateRule}
-                    onUpdateGroupLogic={onUpdateGroupLogic}
-                    onToggleGroup={onToggleGroup}
-                  onRemoveNode={onRemoveNode}
-                  onMoveNode={onMoveNode}
-                  onMoveToGroup={onMoveToGroup}
-                  onMoveBeforeNode={onMoveBeforeNode}
-                  onDragStart={onDragStart}
-                  onDragEnd={onDragEnd}
-                  onSelectNode={onSelectNode}
-                />
+                    <QueryGroup
+                      groupId={child.id}
+                      state={state}
+                      schema={schema}
+                      issues={issues}
+                      depth={depth + 1}
+                      draggingNodeId={draggingNodeId}
+                      selectedNodeId={selectedNodeId}
+                      onAddRule={onAddRule}
+                      onAddGroup={onAddGroup}
+                      onUpdateRule={onUpdateRule}
+                      onUpdateGroupLogic={onUpdateGroupLogic}
+                      onToggleGroup={onToggleGroup}
+                      onRemoveNode={onRemoveNode}
+                      onMoveNode={onMoveNode}
+                      onMoveToGroup={onMoveToGroup}
+                      onMoveBeforeNode={onMoveBeforeNode}
+                      onDragStart={onDragStart}
+                      onDragEnd={onDragEnd}
+                      onSelectNode={onSelectNode}
+                    />
                   </div>
                 );
               }
 
               return (
-                <div key={child.id} className="relative">
+                <div key={child.id} className="relative w-full sm:w-auto">
                   <div
                     aria-hidden="true"
-                    className="absolute -left-5 top-1/2 h-px w-5"
+                    className="absolute -left-5 top-1/2 hidden h-0.5 w-5 sm:block sm:h-px"
                     style={{ backgroundColor: railColor }}
                   />
-                <QueryRule
-                  rule={child}
-                  schema={schema}
-                  issues={issues}
-                  isSelected={selectedNodeId === child.id}
-                  canMoveUp={index > 0}
-                  canMoveDown={index < children.length - 1}
-                onRemove={() => onRemoveNode(child.id)}
-                onMove={(direction) => onMoveNode(groupId, child.id, direction)}
-                onDragStart={(event) => onDragStart(child.id, event)}
-                onDropOnRule={(event) => {
-                  const nodeId = event.dataTransfer.getData("text/plain") || draggingNodeId;
-                  if (nodeId) {
-                    onMoveBeforeNode(nodeId, child.id);
-                  }
-                }}
-                onSelect={() => onSelectNode(child.id)}
-              />
+                  <QueryRule
+                    rule={child}
+                    schema={schema}
+                    issues={issues}
+                    isSelected={selectedNodeId === child.id}
+                    canMoveUp={index > 0}
+                    canMoveDown={index < children.length - 1}
+                    onRemove={() => onRemoveNode(child.id)}
+                    onMove={(direction) =>
+                      onMoveNode(groupId, child.id, direction)
+                    }
+                    onDragStart={(event) => onDragStart(child.id, event)}
+                    onDropOnRule={(event) => {
+                      const nodeId =
+                        event.dataTransfer.getData("text/plain") ||
+                        draggingNodeId;
+                      if (nodeId) {
+                        onMoveBeforeNode(nodeId, child.id);
+                      }
+                    }}
+                    onSelect={() => onSelectNode(child.id)}
+                  />
                 </div>
               );
             })}
-            <div className="relative flex flex-wrap items-center gap-2">
+            <div className="relative grid w-full gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
               <div
                 aria-hidden="true"
-                className="absolute -left-5 top-1/2 h-px w-5"
+                className="absolute -left-5 top-1/2 hidden h-0.5 w-5 sm:block sm:h-px"
                 style={{ backgroundColor: railColor }}
               />
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                onAddRule(groupId);
-              }}
-              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-accent)] sm:px-3"
-            >
-              + Add condition
-            </button>
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                onAddGroup(groupId);
-              }}
-              className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-text)] sm:px-3"
-            >
-              + Add inner group
-            </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onAddRule(groupId);
+                }}
+                className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-accent)] sm:px-3"
+              >
+                + Add condition
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onAddGroup(groupId);
+                }}
+                className="rounded-md border border-dashed border-[var(--bq-border)] bg-[var(--bq-panel)] px-2.5 py-2 text-xs font-semibold text-[var(--bq-text)] sm:px-3"
+              >
+                + Add inner group
+              </button>
             </div>
           </div>
         </div>
@@ -271,6 +282,3 @@ export function QueryGroup({
     </section>
   );
 }
-
-
-
