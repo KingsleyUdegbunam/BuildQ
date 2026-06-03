@@ -1,7 +1,12 @@
 "use client";
 
 import type { DragEvent } from "react";
-import { QueryRule as QueryRuleType, QuerySchema, QueryValue, ValidationIssue } from "../types/query";
+import {
+  QueryRule as QueryRuleType,
+  QuerySchema,
+  QueryValue,
+  ValidationIssue,
+} from "../types/query";
 
 type QueryRuleProps = {
   rule: QueryRuleType;
@@ -63,7 +68,7 @@ export function QueryRule({
         event.stopPropagation();
         onDropOnRule(event);
       }}
-      className={`group w-[154px] rounded-md border bg-[var(--bq-panel)] p-2.5 shadow-sm transition sm:w-[190px] sm:p-3 ${
+      className={`group w-full rounded-md border bg-[var(--bq-panel)] p-2.5 shadow-sm transition sm:w-[190px] sm:p-3 ${
         isInvalid
           ? "border-[var(--bq-danger)]"
           : isSelected
@@ -72,7 +77,10 @@ export function QueryRule({
       }`}
     >
       <div className="flex items-start gap-2">
-        <span className="cursor-grab rounded border border-[var(--bq-border)] px-1.5 py-1 text-[10px] text-[var(--bq-muted)]" title="Drag rule">
+        <span
+          className="cursor-grab rounded border border-[var(--bq-border)] px-1.5 py-1 text-[10px] text-[var(--bq-muted)]"
+          title="Drag rule"
+        >
           ::
         </span>
         <div className="min-w-0 flex-1">
@@ -84,44 +92,48 @@ export function QueryRule({
           </div>
         </div>
       </div>
-      <div className="mt-3 flex items-center gap-1 border-t border-[var(--bq-border)] pt-2">
-        <span className="rounded bg-[var(--bq-accent-soft)] px-1.5 py-0.5 text-[11px] text-[var(--bq-accent)]">
+      <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-[var(--bq-border)] pt-2">
+        <span className="max-w-full rounded bg-[var(--bq-accent-soft)] px-1.5 py-0.5 text-[11px] text-[var(--bq-accent)]">
           {field.type}
         </span>
-        <div className="ml-auto flex items-center gap-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
+        <div className="grid w-full grid-cols-3 gap-2 px-1 opacity-100 transition sm:ml-auto sm:flex sm:w-auto sm:px-0 sm:opacity-0 sm:group-hover:opacity-100">
           <button
             type="button"
             disabled={!canMoveUp}
+            aria-label="Move rule up"
             onClick={(event) => {
               event.stopPropagation();
               onMove(-1);
             }}
-            className="rounded border border-[var(--bq-border)] px-1.5 py-0.5 text-[11px] text-[var(--bq-text)] disabled:opacity-40"
+            className="grid h-7 min-w-0 place-items-center rounded border border-[var(--bq-border)] px-2 text-sm leading-none text-[var(--bq-text)] disabled:opacity-40 sm:min-w-7"
             title="Move up"
           >
-            Up
+            &uarr;
           </button>
           <button
             type="button"
             disabled={!canMoveDown}
+            aria-label="Move rule down"
             onClick={(event) => {
               event.stopPropagation();
               onMove(1);
             }}
-            className="rounded border border-[var(--bq-border)] px-1.5 py-0.5 text-[11px] text-[var(--bq-text)] disabled:opacity-40"
+            className="grid h-7 min-w-0 place-items-center rounded border border-[var(--bq-border)] px-2 text-sm leading-none text-[var(--bq-text)] disabled:opacity-40 sm:min-w-7"
             title="Move down"
           >
-            Down
+            &darr;
           </button>
           <button
             type="button"
+            aria-label="Delete rule"
             onClick={(event) => {
               event.stopPropagation();
               onRemove();
             }}
-            className="rounded border border-[var(--bq-danger)] px-1.5 py-0.5 text-[11px] text-[var(--bq-danger)]"
+            className="grid h-7 min-w-0 place-items-center rounded border border-[var(--bq-danger)] px-2 text-sm leading-none text-[var(--bq-danger)] sm:min-w-7"
+            title="Delete rule"
           >
-            Del
+            &times;
           </button>
         </div>
       </div>
@@ -131,12 +143,10 @@ export function QueryRule({
         </div>
       ) : (
         <div className="mt-1.5 text-xs text-[var(--bq-muted)]">
-          {field.label} {operatorLabel} {hidesValue ? "" : valueAsInput(rule.value)}
+          {field.label} {operatorLabel}{" "}
+          {hidesValue ? "" : valueAsInput(rule.value)}
         </div>
       )}
     </div>
   );
 }
-
-
-

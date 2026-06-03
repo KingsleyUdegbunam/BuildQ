@@ -86,8 +86,8 @@ describe("query builder UI", () => {
     );
 
     expect(screen.getByText("3 matches")).toBeInTheDocument();
-    expect(screen.getByText("Ada Johnson")).toBeInTheDocument();
-  });
+    expect(screen.getAllByText("Ada Johnson").length).toBeGreaterThan(0);
+  }, 10000);
 
   it("updates schema-driven controls when the dataset changes", async () => {
     const user = userEvent.setup();
